@@ -1,11 +1,16 @@
-import React from "react";
-import BoardItem from "./components/BoardItem";
+import React from 'react';
+import './assets/scss/main.scss';
+
+const Header = React.lazy(() => import('./components/header'));
+const Footer = React.lazy(() => import('./components/footer'));
+const Content = React.lazy(() => import('./components/content'));
 
 function App() {
   return (
-    <div className="App">
-      <h2>Kanaban Board</h2>
-      <BoardItem />
+    <div className="app__wrapper">
+      <Header />
+      <Content />
+      <Footer />
     </div>
   );
 }

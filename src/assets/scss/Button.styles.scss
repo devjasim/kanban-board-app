@@ -1,0 +1,24 @@
+button {
+  margin: 0;
+  padding: 0.8rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  border: 0;
+  border-radius: 0.2rem;
+  background-color: #0c92d6;
+  cursor: pointer;
+  &.button__transparent {
+    color: #4e4e4e;
+    background: none;
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+  &.button__primary {
+    background-color: #0c92d6;
+  }
+  &svg {
+    margin-right: 10px;
+  }
+}
