@@ -8,6 +8,7 @@ body {
   font-weight: 400;
   background-color: #f1f1f1;
   color: #1b1b1b;
+  line-height: 1.5;
 }
 
 .app__wrapper {
@@ -21,4 +22,15 @@ textarea {
   border: 1px solid #ddd;
   border-radius: 0.2rem;
   padding: 0.5rem 1rem;
+}
+
+.flex__between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
 }

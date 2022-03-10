@@ -1,7 +1,12 @@
 import React from 'react';
+import './Header.styles.scss';
 
 const Footer = () => {
-  return <div>Made with ❤️ by Jasim</div>;
+  return (
+    <div>
+      <h2>Made with ❤️ by Jasim</h2>
+    </div>
+  );
 };
 
 export default Footer;

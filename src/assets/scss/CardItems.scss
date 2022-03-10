@@ -1,0 +1,22 @@
+.card__item {
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 1px 4px 0px rgba(154, 154, 154, 0.45);
+  border-radius: 0.2rem;
+  background-color: #fff;
+  p {
+    margin: 0;
+    color: #484848;
+    font-size: 0.875rem;
+  }
+
+  .edit {
+    cursor: pointer;
+  }
+
+  &:not(:nth-last-of-type(1)) {
+    margin-top: 0.6rem;
+  }
+}

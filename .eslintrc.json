@@ -29,6 +29,7 @@
     "react/prop-types": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-quotes": [1, "prefer-double"],
+    "operator-linebreak": ["error", "after"],
     "arrow-body-style": 0,
     "react/jsx-filename-extension": [
       1,

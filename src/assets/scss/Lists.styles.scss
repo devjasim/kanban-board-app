@@ -1,0 +1,21 @@
+.header {
+  margin-bottom: 1rem;
+  h4 {
+    margin: 0;
+  }
+}
+
+.footer {
+  margin-top: 1.5rem;
+  .add_item {
+    span {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      flex: 1;
+      svg {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}
