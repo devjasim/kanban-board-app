@@ -1,15 +1,22 @@
 .card__item {
-  padding: 0.5rem;
+  padding-right: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: 0px 1px 4px 0px rgba(154, 154, 154, 0.45);
   border-radius: 0.2rem;
   background-color: #fff;
+  cursor: pointer;
   p {
     margin: 0;
     color: #484848;
     font-size: 0.875rem;
+    padding: 0.5rem;
+    user-select: none;
+  }
+
+  input {
+    margin: 0.2rem;
   }
 
   .edit {

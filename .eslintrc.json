@@ -29,7 +29,17 @@
     "react/prop-types": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "jsx-quotes": [1, "prefer-double"],
-    "operator-linebreak": ["error", "after"],
+    "no-nested-ternary": 0,
+    "operator-linebreak": ["error", "before"],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": "always",
+        "ObjectPattern": { "multiline": false },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+      }
+    ],
     "arrow-body-style": 0,
     "react/jsx-filename-extension": [
       1,
@@ -40,11 +50,7 @@
     "react/function-component-definition": [
       2,
       {
-        "namedComponents": [
-          "function-declaration",
-          "function-expression",
-          "arrow-function"
-        ],
+        "namedComponents": ["function-declaration", "function-expression", "arrow-function"],
         "unnamedComponents": ["function-expression", "arrow-function"]
       }
     ],
@@ -73,7 +79,7 @@
       "error",
       {
         "arrays": "always-multiline",
-        "objects": "always-multiline",
+        "objects": "only-multiline",
         "imports": "always-multiline",
         "exports": "always-multiline",
         "functions": "never"

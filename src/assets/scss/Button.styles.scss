@@ -8,6 +8,7 @@ button {
   border-radius: 0.2rem;
   background-color: #0c92d6;
   cursor: pointer;
+  transition: 0.3s all ease-in-out;
   &.button__transparent {
     color: #4e4e4e;
     background: none;
@@ -18,7 +19,25 @@ button {
   &.button__primary {
     background-color: #0c92d6;
   }
-  &svg {
-    margin-right: 10px;
+
+  &.icon__left,
+  &.icon__right,
+  &.icon__center {
+    display: flex;
+    align-items: center;
+  }
+
+  &.icon__left {
+    svg {
+      margin-right: 10px;
+    }
+  }
+  &.icon__right {
+    svg {
+      margin-left: 10px;
+    }
+  }
+  &.icon__center {
+    padding: 0.5rem 0.5rem;
   }
 }

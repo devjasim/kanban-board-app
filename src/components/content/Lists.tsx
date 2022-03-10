@@ -1,3 +1,4 @@
+import Button from 'components/Button';
 import React, { useState } from 'react';
 import { AiOutlineCopy, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
@@ -18,13 +19,18 @@ const Lists = () => {
       ))}
       <div className="footer">
         {showAddInput ? (
-          <AddInput />
+          <AddInput showAddInput={showAddInput} setShowAddInput={setShowAddInput} />
         ) : (
           <div className="add_item flex__between">
-            <button type="button" onClick={() => setShowAddInput(true)}>
-              <AiOutlinePlus />
-              Add a Card
-            </button>
+            <Button
+              color="transparent"
+              title="Add a Card"
+              type="button"
+              iconPosition="left"
+              onClick={() => setShowAddInput(true)}
+            >
+              <AiOutlinePlus size="18" />
+            </Button>
             <AiOutlineCopy />
           </div>
         )}
