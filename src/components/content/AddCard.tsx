@@ -5,7 +5,7 @@ import '../../assets/scss/AddCard.styles.scss';
 import AddButton from './AddButton';
 
 const AddCard = (props: AddCardProps) => {
-  const inputRef = useRef<any>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const { setShowAddInput, showAddInput } = props;
 
