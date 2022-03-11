@@ -1,7 +1,10 @@
 import Button from 'components/Button';
-import React, { useState } from 'react';
+import { BoardListProp } from 'components/Models';
+import ID from 'components/utils';
+import React, { useCallback, useEffect, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
-import './Board.styles.scss';
+import '../../assets/scss/Board.styles.scss';
+import AddButton from './AddButton';
 import Lists from './Lists';
 
 const Content = () => {
@@ -10,12 +13,47 @@ const Content = () => {
   };
 
   const [showAddListInput, setShowAddListInput] = useState<boolean>(false);
+  const [boardValue, setBoardValue] = useState<string>('');
+  const [boardObj, setBoardObj] = useState<BoardListProp>();
+  const [boardList, setBoardList] = useState<BoardListProp[]>([]);
+
+  const generateId = ID();
+
+  const handleAddBoard = (e: React.ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (boardValue !== '') {
+      setBoardObj({
+        title: boardValue,
+        id: generateId,
+        type: boardValue,
+        status: boardValue,
+      });
+    }
+    setBoardValue('');
+  };
+
+  const setBoardLists = useCallback(() => {
+    if (boardObj) {
+      setBoardList((prev) => [...prev, boardObj]);
+    }
+    setBoardObj(undefined);
+  }, [boardObj]);
+
+  useEffect(() => {
+    setBoardLists();
+  }, [setBoardLists]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setBoardValue(value);
+  };
+
+  console.log('BOARD', boardValue);
+  console.log('BOARD', boardList);
 
   return (
     <div className="board__container">
-      {[...Array(5)].map((item, i) => (
-        <Lists key={Math.floor(Math.random() * 100)} />
-      ))}
+      {boardList.length > 0 && boardList.map((item, i) => <Lists key={item.id} data={item} />)}
 
       {!showAddListInput && (
         <div className="add__list">
@@ -32,8 +70,17 @@ const Content = () => {
 
       {showAddListInput && (
         <div className="add__list__input">
-          <input type="text" />
-          <Button title="Add List" type="submit" onClick={() => console.log('OK')} />
+          <form onSubmit={handleAddBoard}>
+            <input onChange={handleChange} value={boardValue} type="text" />
+            <AddButton
+              type="submit"
+              onClick={() => setShowAddListInput(false)}
+              size={20}
+              iconPosition="right"
+              title="Add Card"
+              color="primary"
+            />
+          </form>
         </div>
       )}
     </div>

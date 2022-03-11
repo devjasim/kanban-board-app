@@ -1,4 +1,5 @@
 import Button from 'components/Button';
+import { BoardListProp } from 'components/Models';
 import React, { useState } from 'react';
 import { AiOutlineCopy, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
@@ -6,12 +7,17 @@ import '../../assets/scss/Lists.styles.scss';
 import AddInput from './AddCard';
 import CardItems from './CardItems';
 
-const Lists = () => {
+interface ListProp {
+  data: BoardListProp;
+}
+
+const Lists = (props: ListProp) => {
   const [showAddInput, setShowAddInput] = useState<boolean>(false);
+  const { data } = props;
   return (
     <div className="board__item">
       <div className="header flex__between">
-        <h4>Title</h4>
+        <h4>{data.title}</h4>
         <BiDotsHorizontalRounded />
       </div>
       {[...Array(2)].map(() => (
