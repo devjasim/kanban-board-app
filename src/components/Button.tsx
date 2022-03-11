@@ -3,7 +3,7 @@ import '../assets/scss/Button.styles.scss';
 import { ButtonProps } from './Models';
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { title, color, children, iconPosition, onClick } = props;
+  const { title, color, children, iconPosition, onClick, type } = props;
   return (
     <button
       onClick={onClick}
@@ -16,7 +16,8 @@ const Button: React.FC<ButtonProps> = (props) => {
           ? 'icon__center'
           : 'null'
       }`}
-      type="button"
+      // eslint-disable-next-line react/button-has-type
+      type={type !== undefined ? type : 'button'}
     >
       {!children && title}
 

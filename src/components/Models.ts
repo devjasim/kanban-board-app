@@ -3,7 +3,7 @@ import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
 export interface ButtonProps {
   title?: string;
   size?: string;
-  type?: string;
+  type?: 'submit' | 'button' | 'reset';
   color?: string;
   onClick?: MouseEventHandler;
   iconPosition?: string;
