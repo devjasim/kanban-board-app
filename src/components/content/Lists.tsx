@@ -1,5 +1,5 @@
 import Button from 'components/Button';
-import { BoardListProp } from 'components/Models';
+import { BoardListProp, CardListProp } from 'components/Models';
 import React, { useState } from 'react';
 import { AiOutlineCopy, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
@@ -14,6 +14,10 @@ interface ListProp {
 const Lists = (props: ListProp) => {
   const [showAddInput, setShowAddInput] = useState<boolean>(false);
   const { data } = props;
+
+  const [cardObj, setCardObj] = useState<CardListProp>();
+  const [cardLists, setCardLists] = useState<CardListProp[]>([]);
+
   return (
     <div className="board__item">
       <div className="header flex__between">
