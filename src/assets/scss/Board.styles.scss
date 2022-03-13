@@ -9,6 +9,10 @@
     padding: 1.2rem 1.5rem;
     background-color: #fff;
     height: fit-content;
+
+    @media screen and (min-width: 1366px) {
+      max-width: 250px;
+    }
   }
 
   .add__list__input {

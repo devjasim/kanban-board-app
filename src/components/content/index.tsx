@@ -1,5 +1,5 @@
 import Button from 'components/Button';
-import { BoardListProp } from 'components/Models';
+import { BoardListProp, CardListProp } from 'components/Models';
 import uniqueId from 'components/utils';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
@@ -14,6 +14,7 @@ const Content = () => {
   const [boardValue, setBoardValue] = useState<string>('');
   const [boardObj, setBoardObj] = useState<BoardListProp>();
   const [boardLists, setBoardLists] = useState<BoardListProp[]>([]);
+  const [cardLists, setCardLists] = useState<CardListProp[]>([]);
 
   // Generate Unique ID
   const generateId = uniqueId();
@@ -78,7 +79,10 @@ const Content = () => {
 
   return (
     <div className="board__container">
-      {boardLists.length > 0 && boardLists.map((item, i) => <Lists key={item.id} data={item} />)}
+      {boardLists.length > 0 &&
+        boardLists.map((item, i) => (
+          <Lists cardLists={cardLists} setCardLists={setCardLists} key={item.id} data={item} />
+        ))}
 
       {!showAddListInput && (
         <div className="add__list">

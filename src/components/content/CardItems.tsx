@@ -1,18 +1,21 @@
 import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
-import React, { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, Dispatch, DragEvent, FormEvent, SetStateAction } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsCheckLg } from 'react-icons/bs';
 import '../../assets/scss/CardItems.styles.scss';
 
+const { useCallback, useEffect, useRef, useState } = React;
+
 interface CardProps {
   data: BoardListProp;
+  setCardLists: Dispatch<SetStateAction<CardListProp[]>>;
 }
 
 const CardItems = (props: CardProps) => {
   const [edit, setEdit] = useState<boolean>(false);
 
-  const { data } = props;
+  const { data, setCardLists } = props;
 
   const inputRef = useRef<any>(null);
   const [cardObj, setCardObj] = useState<CardListProp>();
@@ -39,12 +42,31 @@ const CardItems = (props: CardProps) => {
     setInputValue(value);
   };
 
+  const onDragStart = (evt: DragEvent<HTMLDivElement>) => {
+    console.log('OKAY');
+    const element = evt.currentTarget;
+    element.classList.add('dragged');
+    evt.dataTransfer.setData('text/plain', evt.currentTarget.id);
+    evt.dataTransfer.effectAllowed = 'move';
+  };
+  const onDragEnd = (evt: DragEvent<HTMLDivElement>) => {
+    console.log('END DRAG');
+    evt.currentTarget.classList.remove('dragged');
+  };
+
   return (
-    <div onDoubleClick={() => setEdit(true)} className="card__item">
+    <div
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      id={data.id}
+      draggable
+      onDoubleClick={() => setEdit(true)}
+      className="card__item"
+    >
       {!edit ? (
         <p>{data.title}</p>
       ) : (
-        <form onSubmit={handleEdit}>
+        <form className="flex__center" onSubmit={handleEdit}>
           <input ref={inputRef} onChange={handleChange} type="text" value={inputValue} />
           <span className="edit">
             <Button
@@ -59,7 +81,11 @@ const CardItems = (props: CardProps) => {
           </span>
         </form>
       )}
-      <span className="edit">{!edit && <AiOutlineEdit onClick={() => setEdit(true)} />}</span>
+      {!edit && (
+        <span className="edit">
+          <AiOutlineEdit onClick={() => setEdit(true)} />
+        </span>
+      )}
     </div>
   );
 };

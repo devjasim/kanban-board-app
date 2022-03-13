@@ -23,6 +23,7 @@
     "react/react-in-jsx-scope": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "no-param-reassign": ["error", { "props": false }],
     "no-console": 0,
     "react/state-in-constructor": 0,
     "indent": 0,
