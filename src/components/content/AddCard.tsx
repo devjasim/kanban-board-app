@@ -28,17 +28,16 @@ const AddCard = (props: AddCardProps) => {
     }
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const obj = {
       type: cardData.type,
       status: cardData.status,
       title: inputValue,
       id: generateId,
     };
-
-    setCardObj(obj);
+    await setCardObj(obj);
+    await setShowAddInput(false);
   };
 
   /**
@@ -51,7 +50,7 @@ const AddCard = (props: AddCardProps) => {
       setCardLists((prev) => [...prev, cardObj]);
     }
     setCardObj(undefined);
-  }, [cardObj]);
+  }, [cardObj, setCardLists]);
 
   useEffect(() => {
     handleSetBoardList();
@@ -65,12 +64,18 @@ const AddCard = (props: AddCardProps) => {
   return (
     <div className="add__card">
       <form onSubmit={handleSubmit}>
-        <textarea onChange={handleCreateCard} value={inputValue} ref={inputRef} rows={5} />
+        <textarea
+          onChange={handleCreateCard}
+          value={inputValue}
+          name="Card Text"
+          ref={inputRef}
+          rows={4}
+        />
         <div className="actions flex__between">
           <AddButton
             type="submit"
-            onClick={() => setShowAddInput(false)}
             size={20}
+            handleClose={() => setShowAddInput(false)}
             iconPosition="right"
             title="Add Card"
             color="primary"

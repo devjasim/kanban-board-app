@@ -18,7 +18,6 @@ const Lists = (props: ListProp) => {
   const { data, cardLists, setCardLists } = props;
 
   const onDragEnter = (evt: DragEvent<HTMLDivElement>) => {
-    console.log('ENTER');
     evt.preventDefault();
     const element = evt.currentTarget;
     element.classList.add('dragged-over');
@@ -26,7 +25,6 @@ const Lists = (props: ListProp) => {
   };
 
   const onDragLeave = (evt: DragEvent<HTMLDivElement>) => {
-    console.log('WORKING LEAVE');
     const { currentTarget } = evt;
     const newTarget = evt.relatedTarget;
     if (newTarget) {
@@ -40,7 +38,6 @@ const Lists = (props: ListProp) => {
   };
 
   const onDragOver = (evt: DragEvent<HTMLDivElement>) => {
-    console.log('OVER');
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'move';
   };
@@ -49,15 +46,12 @@ const Lists = (props: ListProp) => {
     evt.preventDefault();
     evt.currentTarget.classList.remove('dragged-over');
     const datas = evt.dataTransfer.getData('text/plain');
-    console.log('DATAS', value);
     const tasks = cardLists;
     const updated = tasks.map((item) => {
-      console.log('FUCK', item.status);
       if (item.id === datas) item.status = value;
       return item;
     });
     setCardLists(updated);
-    console.log('INSIDE', updated);
   };
 
   console.log('CARD LISTs', cardLists);
@@ -78,7 +72,7 @@ const Lists = (props: ListProp) => {
       {cardLists
         .filter((item) => item.status === data.title)
         .map((card) => (
-          <CardItems setCardLists={setCardLists} key={card.id} data={card} />
+          <CardItems cardLists={cardLists} setCardLists={setCardLists} key={card.id} data={card} />
         ))}
       <div className="footer">
         {showAddInput ? (

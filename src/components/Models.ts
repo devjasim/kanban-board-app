@@ -10,7 +10,7 @@ export interface ButtonProps {
 }
 
 export interface AddButtonProps {
-  onClick?: MouseEventHandler;
+  handleClose?: MouseEventHandler;
   title?: string;
   type: 'submit' | 'button' | 'reset';
   iconPosition?: string;

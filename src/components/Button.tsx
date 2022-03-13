@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = (props) => {
           : 'null'
       }`}
       // eslint-disable-next-line react/button-has-type
-      type={type !== undefined ? type : 'button'}
+      type={type}
     >
       {!children && title}
 

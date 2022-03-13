@@ -25,7 +25,7 @@ const Content = () => {
    * @param e
    * @return none;
    */
-  const handleFormSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (boardValue !== '') {
       setBoardObj({
@@ -103,7 +103,7 @@ const Content = () => {
             <input ref={inputFocusRef} onChange={handleChange} value={boardValue} type="text" />
             <AddButton
               type="submit"
-              onClick={() => setShowAddListInput(false)}
+              handleClose={() => setShowAddListInput(false)}
               size={20}
               iconPosition="right"
               title="Add Card"
