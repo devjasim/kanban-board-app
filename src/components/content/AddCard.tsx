@@ -1,34 +1,71 @@
-import { AddCardProps } from 'components/Models';
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { AddCardProps, CardListProp } from 'components/Models';
+import uniqueId from 'components/utils';
+import React, { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import '../../assets/scss/AddCard.styles.scss';
 import AddButton from './AddButton';
 
 const AddCard = (props: AddCardProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const generateId = uniqueId();
 
-  const { setShowAddInput, showAddInput } = props;
-  const [cardValue, setCardValue] = useState<string>('');
+  const { setShowAddInput, showAddInput, cardData, setCardLists } = props;
 
-  const setFoucs = () => {
+  useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
-  };
-
-  useEffect(() => {
-    setFoucs();
   }, []);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+  const [edit, setEdit] = useState<boolean>(false);
+
+  const [cardObj, setCardObj] = useState<CardListProp>();
+  const [inputValue, setInputValue] = useState<string>('');
+
+  useEffect(() => {
+    if (inputRef && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const obj = {
+      type: cardData.type,
+      status: cardData.status,
+      title: inputValue,
+      id: generateId,
+    };
+
+    setCardObj(obj);
+  };
+
+  /**
+   * @name handleSetBoardList
+   * @description setBoardList array array update when boardObje exists and change
+   * @return none
+   */
+  const handleSetBoardList = useCallback(() => {
+    if (cardObj) {
+      setCardLists((prev) => [...prev, cardObj]);
+    }
+    setCardObj(undefined);
+  }, [cardObj]);
+
+  useEffect(() => {
+    handleSetBoardList();
+  }, [handleSetBoardList]);
+
+  const handleCreateCard = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
-    setCardValue(value);
+    setInputValue(value);
   };
 
   return (
     <div className="add__card">
-      <form>
-        <textarea onChange={handleChange} value={cardValue} ref={inputRef} rows={5} />
+      <form onSubmit={handleSubmit}>
+        <textarea onChange={handleCreateCard} value={inputValue} ref={inputRef} rows={5} />
         <div className="actions flex__between">
           <AddButton
             type="submit"

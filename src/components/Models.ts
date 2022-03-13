@@ -9,11 +9,6 @@ export interface ButtonProps {
   iconPosition?: string;
 }
 
-export interface AddCardProps {
-  showAddInput: boolean;
-  setShowAddInput: Dispatch<SetStateAction<boolean>>;
-}
-
 export interface AddButtonProps {
   onClick?: MouseEventHandler;
   title?: string;
@@ -36,4 +31,11 @@ export interface BoardListProp {
   title: string;
   type: string;
   status: string;
+}
+
+export interface AddCardProps {
+  showAddInput: boolean;
+  setShowAddInput: Dispatch<SetStateAction<boolean>>;
+  cardData: BoardListProp;
+  setCardLists: Dispatch<SetStateAction<CardListProp[]>>;
 }

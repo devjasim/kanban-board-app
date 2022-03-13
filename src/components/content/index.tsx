@@ -65,10 +65,13 @@ const Content = () => {
   };
 
   useEffect(() => {
+    console.log('OK');
     if (inputFocusRef.current) {
       inputFocusRef.current.focus();
     }
-  }, [inputFocusRef]);
+  }, []);
+
+  console.log(inputFocusRef);
 
   console.log('BOARD', boardValue);
   console.log('BOARD', boardLists);

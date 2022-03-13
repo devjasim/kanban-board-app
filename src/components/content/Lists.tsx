@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { AiOutlineCopy, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import '../../assets/scss/Lists.styles.scss';
-import AddInput from './AddCard';
+import AddCard from './AddCard';
 import CardItems from './CardItems';
 
 interface ListProp {
@@ -15,8 +15,9 @@ const Lists = (props: ListProp) => {
   const [showAddInput, setShowAddInput] = useState<boolean>(false);
   const { data } = props;
 
-  const [cardObj, setCardObj] = useState<CardListProp>();
   const [cardLists, setCardLists] = useState<CardListProp[]>([]);
+
+  console.log(cardLists);
 
   return (
     <div className="board__item">
@@ -24,12 +25,19 @@ const Lists = (props: ListProp) => {
         <h4>{data.title}</h4>
         <BiDotsHorizontalRounded />
       </div>
-      {[...Array(2)].map(() => (
-        <CardItems />
-      ))}
+      {cardLists
+        .filter((item) => item.type === data.title)
+        .map((card) => (
+          <CardItems key={card.id} data={card} />
+        ))}
       <div className="footer">
         {showAddInput ? (
-          <AddInput showAddInput={showAddInput} setShowAddInput={setShowAddInput} />
+          <AddCard
+            setCardLists={setCardLists}
+            cardData={data}
+            showAddInput={showAddInput}
+            setShowAddInput={setShowAddInput}
+          />
         ) : (
           <div className="add_item flex__between">
             <Button
@@ -49,4 +57,4 @@ const Lists = (props: ListProp) => {
   );
 };
 
-export default Lists;
+export default React.memo(Lists);
