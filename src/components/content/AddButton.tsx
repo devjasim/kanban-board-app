@@ -5,7 +5,7 @@ import { FaTimes } from 'react-icons/fa';
 import '../../assets/scss/AddButton.styles.scss';
 
 const AddButton = (props: AddButtonProps) => {
-  const { handleClose, title, iconPosition, type, size, color, handleAdd } = props;
+  const { handleClose, title, type, size, color, handleAdd } = props;
   return (
     <div className="buttons flex">
       <Button onClick={handleAdd} title={title} type={type} color={color} />

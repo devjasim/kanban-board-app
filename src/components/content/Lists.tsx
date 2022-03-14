@@ -74,7 +74,7 @@ const Lists = (props: ListProp) => {
         .map((card) => (
           <CardItems cardLists={cardLists} setCardLists={setCardLists} key={card.id} data={card} />
         ))}
-      <div className="footer">
+      <div className="add__card">
         {showAddInput ? (
           <AddCard
             setCardLists={setCardLists}

@@ -66,7 +66,6 @@ const Content = () => {
   };
 
   useEffect(() => {
-    console.log('OK');
     if (inputFocusRef.current) {
       inputFocusRef.current.focus();
     }
@@ -80,7 +79,7 @@ const Content = () => {
   return (
     <div className="board__container">
       {boardLists.length > 0 &&
-        boardLists.map((item, i) => (
+        boardLists.map((item) => (
           <Lists cardLists={cardLists} setCardLists={setCardLists} key={item.id} data={item} />
         ))}
 
@@ -92,7 +91,7 @@ const Content = () => {
             iconPosition="left"
             onClick={() => setShowAddListInput(true)}
           >
-            <BiPlus />
+            <BiPlus size="20" />
           </Button>
         </div>
       )}

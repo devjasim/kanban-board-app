@@ -1,10 +1,10 @@
 import React from 'react';
-import './Header.styles.scss';
+import './Footer.styles.scss';
 
 const Footer = () => {
   return (
-    <div>
-      <h2>Made with ❤️ by Jasim</h2>
+    <div className="footer">
+      <p>Made with ❤️ by Jasim</p>
     </div>
   );
 };
