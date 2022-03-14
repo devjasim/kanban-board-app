@@ -1,21 +1,28 @@
 import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
-import React, { Dispatch, DragEvent, SetStateAction, useState } from 'react';
+import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction, useState } from 'react';
 import { AiOutlineCopy, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import '../../assets/scss/Lists.styles.scss';
 import AddCard from './AddCard';
 import CardItems from './CardItems';
+import EditForm from './EditForm';
 
 interface ListProp {
   data: BoardListProp;
   cardLists: CardListProp[];
   setCardLists: Dispatch<SetStateAction<CardListProp[]>>;
+  setBoardLists: Dispatch<SetStateAction<BoardListProp[]>>;
+  boardLists: BoardListProp[];
 }
 
 const Lists = (props: ListProp) => {
+  const { data, cardLists, setCardLists, boardLists, setBoardLists } = props;
+
   const [showAddInput, setShowAddInput] = useState<boolean>(false);
-  const { data, cardLists, setCardLists } = props;
+  const [titleEdit, setTitleEdit] = useState<boolean>(false);
+  const [titleValue, setTitleValue] = useState<string>('');
+  const [titleError, setTitleError] = useState<boolean>(false);
 
   const onDragEnter = (evt: DragEvent<HTMLDivElement>) => {
     evt.preventDefault();
@@ -57,6 +64,43 @@ const Lists = (props: ListProp) => {
   console.log('CARD LISTs', cardLists);
   console.log('DATA', data.status);
 
+  /**
+   * @name handleTitleEdit
+   * @description Edti list title and return new array and update state
+   * @param {*} e, id
+   * @return update setCardLists and setTitleEdit state
+   */
+  const handleTitleEdit = (e: React.FormEvent<HTMLFormElement>, id: string) => {
+    e.preventDefault();
+
+    if (titleValue === '' || titleError) {
+      return setTitleError(true);
+    }
+
+    const editData = boardLists.map((item) => {
+      if (item.id === id) item.title = titleValue;
+      return item;
+    });
+
+    const promiseAll = Promise.all([setBoardLists(editData), setTitleEdit(false)]);
+    return promiseAll;
+  };
+
+  const editTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setTitleValue(value);
+    if (value === '') {
+      setTitleError(true);
+    } else {
+      setTitleError(false);
+    }
+  };
+
+  const handleSetEdit = () => {
+    setTitleEdit(true);
+    setTitleValue(data.title);
+  };
+
   return (
     <div
       onDragEnter={(e) => onDragEnter(e)}
@@ -66,14 +110,33 @@ const Lists = (props: ListProp) => {
       className="board__item"
     >
       <div className="header flex__between">
-        <h4>{data.title}</h4>
-        <BiDotsHorizontalRounded />
+        <div className="title">
+          {!titleEdit ? (
+            <h4 onDoubleClick={handleSetEdit}>{data.title}</h4>
+          ) : (
+            <EditForm
+              name="Title"
+              placeholder="Enter title here..."
+              handleChange={editTitleChange}
+              handleSubmit={handleTitleEdit}
+              id={data.id}
+              inputValue={titleValue}
+            />
+          )}
+        </div>
+        <Button type="button" color="transparent" iconPosition="center">
+          <BiDotsHorizontalRounded size={20} />
+        </Button>
       </div>
+
+      {/* Card Lists Component */}
       {cardLists
         .filter((item) => item.status === data.title)
         .map((card) => (
           <CardItems cardLists={cardLists} setCardLists={setCardLists} key={card.id} data={card} />
         ))}
+
+      {/* Add Card Component */}
       <div className="add__card">
         {showAddInput ? (
           <AddCard

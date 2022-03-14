@@ -2,8 +2,9 @@ import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
 import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
-import { BsCheckLg } from 'react-icons/bs';
 import '../../assets/scss/CardItems.styles.scss';
+import EditForm from './EditForm';
+import InputError from './InputError';
 
 const { useCallback, useEffect, useRef, useState } = React;
 
@@ -20,6 +21,7 @@ const CardItems = (props: CardProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState<string>('');
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     if (inputRef && inputRef.current) {
@@ -34,18 +36,29 @@ const CardItems = (props: CardProps) => {
    * @return none
    */
   const handleEdit = (e: React.FormEvent<HTMLFormElement>, id: string) => {
-    console.log('EDIT DATA', e);
+    e.preventDefault();
+
+    if (inputValue === '' || error) {
+      return setError(true);
+    }
+
     const editData = cardLists.map((cardItem) => {
       if (cardItem.id === id) cardItem.title = inputValue;
       return cardItem;
     });
-    setCardLists(editData);
-    setEdit(false);
+
+    const promiseAll = Promise.all([setCardLists(editData), setEdit(false)]);
+    return promiseAll;
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setInputValue(value);
+    if (value === '') {
+      setError(true);
+    } else {
+      setError(false);
+    }
   };
 
   /**
@@ -87,36 +100,39 @@ const CardItems = (props: CardProps) => {
   console.log('CARD', cardLists);
 
   return (
-    <div
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
-      id={data.id}
-      draggable
-      onDoubleClick={() => setEdit(true)}
-      className="card__item"
-    >
-      {!edit ? (
-        <p>{data.title}</p>
-      ) : (
-        <form className="flex__between" onSubmit={(e) => handleEdit(e, data.id)}>
-          <input
-            ref={inputRef}
-            onChange={handleChange}
-            type="text"
-            name="cardname"
-            value={inputValue}
+    <>
+      <div
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        id={data.id}
+        draggable
+        className="card__item"
+      >
+        {!edit ? (
+          <p>{data.title}</p>
+        ) : (
+          <EditForm
+            handleChange={handleChange}
+            handleSubmit={handleEdit}
+            id={data.id}
+            inputValue={inputValue}
+            placeholder="Enter card name..."
+            name="card_name"
           />
-          <Button iconPosition="center" color="primary" title="Submit" type="submit">
-            <BsCheckLg />
+        )}
+        {!edit && (
+          <Button
+            type="button"
+            onClick={() => toggleEdit(data.title)}
+            iconPosition="center"
+            color="transparent"
+          >
+            <AiOutlineEdit size={15} />
           </Button>
-        </form>
-      )}
-      {!edit && (
-        <span className="edit">
-          <AiOutlineEdit onClick={() => toggleEdit(data.title)} />
-        </span>
-      )}
-    </div>
+        )}
+      </div>
+      {error && <InputError title="This field is required!" />}
+    </>
   );
 };
 

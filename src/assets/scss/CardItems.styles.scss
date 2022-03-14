@@ -1,5 +1,4 @@
 .card__item {
-  padding-right: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,5 +25,8 @@
 
   &:not(:nth-last-of-type(1)) {
     margin-top: 0.6rem;
+  }
+  button {
+    margin-right: 0.2rem;
   }
 }

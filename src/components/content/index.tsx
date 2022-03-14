@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import '../../assets/scss/Board.styles.scss';
 import AddButton from './AddButton';
+import InputError from './InputError';
 import Lists from './Lists';
 
 const Content = () => {
@@ -15,6 +16,7 @@ const Content = () => {
   const [boardObj, setBoardObj] = useState<BoardListProp>();
   const [boardLists, setBoardLists] = useState<BoardListProp[]>([]);
   const [cardLists, setCardLists] = useState<CardListProp[]>([]);
+  const [error, setError] = useState<boolean>(false);
 
   // Generate Unique ID
   const generateId = uniqueId();
@@ -27,15 +29,22 @@ const Content = () => {
    */
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (boardValue !== '') {
+
+    if (boardValue === '' || error) {
+      return setError(true);
+    }
+
+    const promiseAll = Promise.all([
       setBoardObj({
         title: boardValue,
         id: generateId,
         type: boardValue,
         status: boardValue,
-      });
-    }
-    setBoardValue('');
+      }),
+      setBoardValue(''),
+    ]);
+
+    return promiseAll;
   };
 
   /**
@@ -63,6 +72,11 @@ const Content = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setBoardValue(value);
+    if (value === '') {
+      setError(true);
+    } else {
+      setError(false);
+    }
   };
 
   useEffect(() => {
@@ -71,18 +85,27 @@ const Content = () => {
     }
   }, []);
 
-  console.log(inputFocusRef);
+  console.log('LIST INPUT REF', inputFocusRef);
 
   console.log('BOARD', boardValue);
   console.log('BOARD', boardLists);
 
   return (
     <div className="board__container">
+      {/* Board Lists Component  */}
       {boardLists.length > 0 &&
         boardLists.map((item) => (
-          <Lists cardLists={cardLists} setCardLists={setCardLists} key={item.id} data={item} />
+          <Lists
+            boardLists={boardLists}
+            setBoardLists={setBoardLists}
+            cardLists={cardLists}
+            setCardLists={setCardLists}
+            key={item.id}
+            data={item}
+          />
         ))}
 
+      {/* Add a List Component  */}
       {!showAddListInput && (
         <div className="add__list">
           <Button
@@ -96,10 +119,18 @@ const Content = () => {
         </div>
       )}
 
+      {/* Add List Input Component  */}
       {showAddListInput && (
         <div className="add__list__input">
           <form onSubmit={handleFormSubmit}>
-            <input ref={inputFocusRef} onChange={handleChange} value={boardValue} type="text" />
+            <input
+              ref={inputFocusRef}
+              onChange={handleChange}
+              value={boardValue}
+              type="text"
+              placeholder="Enter list title"
+            />
+            {error && <InputError title="This is field is reuqired!" />}
             <AddButton
               type="submit"
               handleClose={() => setShowAddListInput(false)}

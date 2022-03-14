@@ -10,17 +10,15 @@ const AddCard = (props: AddCardProps) => {
   const generateId = uniqueId();
 
   const { setShowAddInput, showAddInput, cardData, setCardLists } = props;
+  const [cardObj, setCardObj] = useState<CardListProp>();
+  const [inputValue, setInputValue] = useState<string>('');
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
-
-  const [edit, setEdit] = useState<boolean>(false);
-
-  const [cardObj, setCardObj] = useState<CardListProp>();
-  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     if (inputRef && inputRef.current) {
@@ -30,14 +28,22 @@ const AddCard = (props: AddCardProps) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (inputValue === '' || error) {
+      setError(true);
+      return setShowAddInput(false);
+    }
+
     const obj = {
       type: cardData.type,
       status: cardData.status,
       title: inputValue,
       id: generateId,
     };
-    await setCardObj(obj);
-    await setShowAddInput(false);
+
+    const promiseAll = Promise.all([await setCardObj(obj), await setShowAddInput(false)]);
+
+    return promiseAll;
   };
 
   /**
@@ -70,7 +76,9 @@ const AddCard = (props: AddCardProps) => {
           name="Card Text"
           ref={inputRef}
           rows={4}
+          placeholder="Enter a title for this card"
         />
+
         <div className="actions flex__between">
           <AddButton
             type="submit"
