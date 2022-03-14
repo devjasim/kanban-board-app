@@ -1,16 +1,13 @@
 import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
 import uniqueId from 'components/utils';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { BiPlus } from 'react-icons/bi';
 import '../../assets/scss/Board.styles.scss';
-import AddButton from './AddButton';
-import InputError from './InputError';
+import AddList from './AddList';
 import Lists from './Lists';
 
 const Content = () => {
-  const inputFocusRef = useRef<HTMLInputElement>(null);
-
   const [showAddListInput, setShowAddListInput] = useState<boolean>(false);
   const [boardValue, setBoardValue] = useState<string>('');
   const [boardObj, setBoardObj] = useState<BoardListProp>();
@@ -79,14 +76,6 @@ const Content = () => {
     }
   };
 
-  useEffect(() => {
-    if (inputFocusRef.current) {
-      inputFocusRef.current.focus();
-    }
-  }, []);
-
-  console.log('LIST INPUT REF', inputFocusRef);
-
   console.log('BOARD', boardValue);
   console.log('BOARD', boardLists);
 
@@ -121,26 +110,13 @@ const Content = () => {
 
       {/* Add List Input Component  */}
       {showAddListInput && (
-        <div className="add__list__input">
-          <form onSubmit={handleFormSubmit}>
-            <input
-              ref={inputFocusRef}
-              onChange={handleChange}
-              value={boardValue}
-              type="text"
-              placeholder="Enter list title"
-            />
-            {error && <InputError title="This is field is reuqired!" />}
-            <AddButton
-              type="submit"
-              handleClose={() => setShowAddListInput(false)}
-              size={20}
-              iconPosition="right"
-              title="Add Card"
-              color="primary"
-            />
-          </form>
-        </div>
+        <AddList
+          handleChange={handleChange}
+          handleSubmit={handleFormSubmit}
+          inputValue={boardValue}
+          error={error}
+          setShowComponent={setShowAddListInput}
+        />
       )}
     </div>
   );

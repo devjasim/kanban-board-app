@@ -131,7 +131,7 @@ const Lists = (props: ListProp) => {
 
       {/* Card Lists Component */}
       {cardLists
-        .filter((item) => item.status === data.title)
+        .filter((item) => item.status === data.status)
         .map((card) => (
           <CardItems cardLists={cardLists} setCardLists={setCardLists} key={card.id} data={card} />
         ))}
