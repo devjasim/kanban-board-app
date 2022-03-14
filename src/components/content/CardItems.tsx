@@ -2,6 +2,7 @@ import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
 import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { VscLock, VscUnlock } from 'react-icons/vsc';
 import '../../assets/scss/CardItems.styles.scss';
 import EditForm from './EditForm';
 import InputError from './InputError';
@@ -22,6 +23,7 @@ const CardItems = (props: CardProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
+  const [cardLock, setCardLock] = useState<boolean>(false);
 
   useEffect(() => {
     if (inputRef && inputRef.current) {
@@ -105,7 +107,7 @@ const CardItems = (props: CardProps) => {
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         id={data.id}
-        draggable
+        draggable={!cardLock}
         className="card__item"
       >
         {!edit ? (
@@ -121,14 +123,24 @@ const CardItems = (props: CardProps) => {
           />
         )}
         {!edit && (
-          <Button
-            type="button"
-            onClick={() => toggleEdit(data.title)}
-            iconPosition="center"
-            color="transparent"
-          >
-            <AiOutlineEdit size={15} />
-          </Button>
+          <div>
+            <Button
+              type="button"
+              onClick={() => setCardLock(!cardLock)}
+              iconPosition="center"
+              color="transparent"
+            >
+              {cardLock ? <VscLock size={15} /> : <VscUnlock size={15} />}
+            </Button>
+            <Button
+              type="button"
+              onClick={() => toggleEdit(data.title)}
+              iconPosition="center"
+              color="transparent"
+            >
+              <AiOutlineEdit size={15} />
+            </Button>
+          </div>
         )}
       </div>
       {error && <InputError title="This field is required!" />}
