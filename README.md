@@ -11,7 +11,7 @@ The challenge was quite exciting because of the following reasons
 - React, TypeScript
 - SCSS, CSS
 - React Icons
-- GitHub Actions for running the test cases post commit on "main" branch
+- GitHub Actions for deployment post commit on "master branch" branch
 
 ## Deployment
 
@@ -57,11 +57,11 @@ Web vitals of the app in Desktop and mobile:
 
 Desktop -
 
-![lighthouse_desktop](https://user-images.githubusercontent.com/52109597/155154201-f2ad66b3-bec3-48d9-b051-2635e14a6415.png)
+![lighthouse_desktop](https://user-images.githubusercontent.com/52109597/158518745-80405be1-94df-4b11-b9ba-244402f4324e.png)
 
 Mobile -
 
-![lighthouse_mobile](https://user-images.githubusercontent.com/52109597/155154331-94830d4e-830b-42d2-a565-88542ea945d2.png)
+![lighthouse_mobile](https://user-images.githubusercontent.com/52109597/158518726-c00a0798-b954-434d-8032-6f1b35315f3c.png)
 
 ## What can be improved?
 
