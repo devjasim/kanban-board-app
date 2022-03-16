@@ -8,7 +8,7 @@ import AddCard from './AddCard';
 import CardItems from './CardItems';
 import EditForm from './EditForm';
 
-const { useEffect, useState, useCallback, useRef } = React;
+const { useState } = React;
 
 interface ListProp {
   data: BoardListProp;
@@ -27,13 +27,27 @@ const Lists = (props: ListProp) => {
   const [titleError, setTitleError] = useState<boolean>(false);
   const [openActionPopup, setOpenActionPopup] = useState<boolean>(false);
 
+  /**
+   * @name onDragEnter
+   * @description Set element current target and dragged-over class and set effect move
+   * it's return nothing else remove dragged over class nad set current target
+   * @param {*} evt value
+   * @return update card lists
+   */
   const onDragEnter = (evt: DragEvent<HTMLDivElement>) => {
     evt.preventDefault();
     const element = evt.currentTarget;
-    element.classList.add('dragged-over');
+    element.classList.add('dragged__over');
     evt.dataTransfer.dropEffect = 'move';
   };
 
+  /**
+   * @name onDragLeave
+   * @description when drag leave new if new target equal current target
+   * it's return nothing else remove dragged over class nad set current target
+   * @param {*} evt value
+   * @return update card lists
+   */
   const onDragLeave = (evt: DragEvent<HTMLDivElement>) => {
     const { currentTarget } = evt;
     const newTarget = evt.relatedTarget;
@@ -44,17 +58,29 @@ const Lists = (props: ListProp) => {
     }
     evt.preventDefault();
     const element = evt.currentTarget;
-    element.classList.remove('dragged-over');
+    element.classList.remove('dragged__over');
   };
 
+  /**
+   * @name onDragOver
+   * @description when drag over set drop effect move
+   * @param {*} evt value
+   * @return update card lists
+   */
   const onDragOver = (evt: DragEvent<HTMLDivElement>) => {
     evt.preventDefault();
     evt.dataTransfer.dropEffect = 'move';
   };
 
+  /**
+   * @name onDrop
+   * @description On Drop drag and drop item remove class and update card lists
+   * @param {*} evt value
+   * @return update card lists
+   */
   const onDrop = (evt: DragEvent<HTMLDivElement>, value: string) => {
     evt.preventDefault();
-    evt.currentTarget.classList.remove('dragged-over');
+    evt.currentTarget.classList.remove('dragged__over');
     const datas = evt.dataTransfer.getData('text/plain');
     const tasks = cardLists;
     const updated = tasks.map((item) => {
@@ -63,9 +89,6 @@ const Lists = (props: ListProp) => {
     });
     setCardLists(updated);
   };
-
-  console.log('CARD LISTs', cardLists);
-  console.log('DATA', data.status);
 
   /**
    * @name handleTitleEdit
@@ -86,6 +109,12 @@ const Lists = (props: ListProp) => {
     return promiseAll;
   };
 
+  /**
+   * @name editTitleChange
+   * @description set input value in state when input change
+   * @param {*} e, id
+   * @return
+   */
   const editTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setTitleValue(value);
@@ -96,17 +125,31 @@ const Lists = (props: ListProp) => {
     }
   };
 
+  /**
+   * @name handleSetEdit
+   * @description Open edit form and set input initial value
+   * @return none
+   */
   const handleSetEdit = (title: string) => {
     setTitleEdit(!titleEdit);
     setTitleValue(title);
   };
 
+  /**
+   * @name handleOpenAction
+   * @description handleOpen action popup
+   * @return none
+   */
   const handleOpenAction = () => {
     setOpenActionPopup(!openActionPopup);
   };
 
-  const actionPopupRef = useRef<HTMLDivElement>(null);
-
+  /**
+   * @name handleDelete
+   * @description Delete List with careds and update both card lists and board lists
+   * @param {*} id, status
+   * @return
+   */
   const handleDelete = (id: string, status: string) => {
     const filterCard = cardLists.filter((item) => item.status !== status);
     const filterList = boardLists.filter((item) => item.id !== id);
@@ -137,11 +180,15 @@ const Lists = (props: ListProp) => {
             />
           )}
         </div>
+
+        {/* Action Button  */}
         <Button type="button" onClick={handleOpenAction} color="transparent" iconPosition="center">
           <BiDotsHorizontalRounded size={20} />
         </Button>
+
+        {/* Action Popup  */}
         {openActionPopup && (
-          <div ref={actionPopupRef} className="action__popup">
+          <div className="action__popup">
             <Button
               iconPosition="center"
               title="Edit"

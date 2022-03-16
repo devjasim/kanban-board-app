@@ -53,6 +53,12 @@ const CardItems = (props: CardProps) => {
     return promiseAll;
   };
 
+  /**
+   * @name handleChange
+   * @description set input value on change
+   * @param e
+   * @reutrn none
+   */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setInputValue(value);

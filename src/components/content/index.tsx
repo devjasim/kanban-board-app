@@ -76,9 +76,6 @@ const Content = () => {
     }
   };
 
-  console.log('BOARD', boardValue);
-  console.log('BOARD', boardLists);
-
   return (
     <div className="board__container">
       {/* Board Lists Component  */}
