@@ -1,6 +1,23 @@
-# Getting Started with Create React App
+# Kanban Board Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Experience
+
+The challenge was quite exciting because of the following reasons
+
+- Making drag and drop features for the first time
+
+## Tech Stack
+
+- React, TypeScript
+- SCSS, CSS
+- React Icons
+- GitHub Actions for running the test cases post commit on "main" branch
+
+## Deployment
+
+#### The project is deployed using vercel and can be found at the following url:
+
+- https://kanbanb.vercel.app
 
 ## Available Scripts
 
@@ -8,23 +25,18 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
+The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
+Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
+The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
@@ -39,8 +51,20 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Lighthouse reports
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Web vitals of the app in Desktop and mobile:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Desktop -
+
+![lighthouse_desktop](https://user-images.githubusercontent.com/52109597/155154201-f2ad66b3-bec3-48d9-b051-2635e14a6415.png)
+
+Mobile -
+
+![lighthouse_mobile](https://user-images.githubusercontent.com/52109597/155154331-94830d4e-830b-42d2-a565-88542ea945d2.png)
+
+## What can be improved?
+
+- To write all TDD
+- Using margin, spacing, colors variables
+- Using constants to store the static texts, that can support multiple languages
