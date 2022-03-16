@@ -7,6 +7,7 @@ export interface ButtonProps {
   color?: string;
   onClick?: MouseEventHandler;
   iconPosition?: string;
+  fullWidth?: boolean;
 }
 
 export interface AddButtonProps {

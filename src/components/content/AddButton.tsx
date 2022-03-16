@@ -5,10 +5,10 @@ import { FaTimes } from 'react-icons/fa';
 import '../../assets/scss/AddButton.styles.scss';
 
 const AddButton = (props: AddButtonProps) => {
-  const { handleClose, title, type, size, color, handleAdd } = props;
+  const { handleClose, title, type, size, color } = props;
   return (
     <div className="buttons flex">
-      <Button onClick={handleAdd} title={title} type={type} color={color} />
+      <Button title={title} type={type} color={color} />
       <FaTimes onClick={handleClose} size={size} color="#848080" />
     </div>
   );

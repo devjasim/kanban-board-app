@@ -1,12 +1,14 @@
 import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
-import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction, useState } from 'react';
-import { AiOutlineCopy, AiOutlinePlus } from 'react-icons/ai';
+import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction } from 'react';
+import { AiOutlineCopy, AiOutlineDelete, AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
 import '../../assets/scss/Lists.styles.scss';
 import AddCard from './AddCard';
 import CardItems from './CardItems';
 import EditForm from './EditForm';
+
+const { useEffect, useState, useCallback, useRef } = React;
 
 interface ListProp {
   data: BoardListProp;
@@ -23,6 +25,7 @@ const Lists = (props: ListProp) => {
   const [titleEdit, setTitleEdit] = useState<boolean>(false);
   const [titleValue, setTitleValue] = useState<string>('');
   const [titleError, setTitleError] = useState<boolean>(false);
+  const [openActionPopup, setOpenActionPopup] = useState<boolean>(false);
 
   const onDragEnter = (evt: DragEvent<HTMLDivElement>) => {
     evt.preventDefault();
@@ -72,16 +75,13 @@ const Lists = (props: ListProp) => {
    */
   const handleTitleEdit = (e: React.FormEvent<HTMLFormElement>, id: string) => {
     e.preventDefault();
-
     if (titleValue === '' || titleError) {
       return setTitleError(true);
     }
-
     const editData = boardLists.map((item) => {
       if (item.id === id) item.title = titleValue;
       return item;
     });
-
     const promiseAll = Promise.all([setBoardLists(editData), setTitleEdit(false)]);
     return promiseAll;
   };
@@ -96,9 +96,22 @@ const Lists = (props: ListProp) => {
     }
   };
 
-  const handleSetEdit = () => {
-    setTitleEdit(true);
-    setTitleValue(data.title);
+  const handleSetEdit = (title: string) => {
+    setTitleEdit(!titleEdit);
+    setTitleValue(title);
+  };
+
+  const handleOpenAction = () => {
+    setOpenActionPopup(!openActionPopup);
+  };
+
+  const actionPopupRef = useRef<HTMLDivElement>(null);
+
+  const handleDelete = (id: string, status: string) => {
+    const filterCard = cardLists.filter((item) => item.status !== status);
+    const filterList = boardLists.filter((item) => item.id !== id);
+    setBoardLists(filterList);
+    setCardLists(filterCard);
   };
 
   return (
@@ -112,7 +125,7 @@ const Lists = (props: ListProp) => {
       <div className="header flex__between">
         <div className="title">
           {!titleEdit ? (
-            <h4 onDoubleClick={handleSetEdit}>{data.title}</h4>
+            <h4 onDoubleClick={() => handleSetEdit(data.title)}>{data.title}</h4>
           ) : (
             <EditForm
               name="Title"
@@ -124,9 +137,32 @@ const Lists = (props: ListProp) => {
             />
           )}
         </div>
-        <Button type="button" color="transparent" iconPosition="center">
+        <Button type="button" onClick={handleOpenAction} color="transparent" iconPosition="center">
           <BiDotsHorizontalRounded size={20} />
         </Button>
+        {openActionPopup && (
+          <div ref={actionPopupRef} className="action__popup">
+            <Button
+              iconPosition="center"
+              title="Edit"
+              color="transparent"
+              onClick={() => {
+                handleSetEdit(data.title);
+                setOpenActionPopup(false);
+              }}
+            >
+              <AiOutlineEdit />
+            </Button>
+            <Button
+              iconPosition="center"
+              title="Delete"
+              color="transparent"
+              onClick={() => handleDelete(data.id, data.status)}
+            >
+              <AiOutlineDelete />
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Card Lists Component */}

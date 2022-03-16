@@ -3,7 +3,7 @@ import '../assets/scss/Button.styles.scss';
 import { ButtonProps } from './Models';
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { title, color, children, iconPosition, onClick, type } = props;
+  const { title, color, children, iconPosition, onClick, type, fullWidth } = props;
   return (
     <button
       onClick={onClick}
@@ -14,8 +14,8 @@ const Button: React.FC<ButtonProps> = (props) => {
           ? 'icon__right'
           : iconPosition === 'center'
           ? 'icon__center'
-          : 'null'
-      }`}
+          : ''
+      } ${fullWidth ? 'full__width' : ''} `}
       // eslint-disable-next-line react/button-has-type
       type={type}
     >

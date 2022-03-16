@@ -26,9 +26,13 @@ const AddCard = (props: AddCardProps) => {
     }
   }, []);
 
+  /**
+   * @name handleSubmit
+   * @description set cardObj state and setShow input false
+   * @return callprimise all
+   */
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+    console.log('E', e);
     if (inputValue === '' || error) {
       setError(true);
       return setShowAddInput(false);
@@ -62,6 +66,11 @@ const AddCard = (props: AddCardProps) => {
     handleSetBoardList();
   }, [handleSetBoardList]);
 
+  /**
+   * @name handleCreateCard
+   * @description handleCreateCard set input value to state
+   * @return none
+   */
   const handleCreateCard = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = e.target;
     setInputValue(value);

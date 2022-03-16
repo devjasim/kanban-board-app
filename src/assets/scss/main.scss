@@ -12,6 +12,15 @@ body {
   font-size: 0.875rem;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+  }
+}
+
 .app__wrapper {
   max-width: 1160px;
   padding: 0 2rem;
