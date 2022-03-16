@@ -1,7 +1,6 @@
 import { AddCardProps, CardListProp } from 'components/Models';
 import uniqueId from 'components/utils';
-import React, { ChangeEvent, FormEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import '../../assets/scss/AddCard.styles.scss';
 import AddButton from './AddButton';
 
@@ -9,7 +8,7 @@ const AddCard = (props: AddCardProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const generateId = uniqueId();
 
-  const { setShowAddInput, showAddInput, cardData, setCardLists } = props;
+  const { setShowAddInput, cardData, setCardLists } = props;
   const [cardObj, setCardObj] = useState<CardListProp>();
   const [inputValue, setInputValue] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
@@ -31,23 +30,33 @@ const AddCard = (props: AddCardProps) => {
    * @description set cardObj state and setShow input false
    * @return callprimise all
    */
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log('E', e);
+  const handleSubmit = async () => {
     if (inputValue === '' || error) {
       setError(true);
       return setShowAddInput(false);
     }
-
     const obj = {
       type: cardData.type,
       status: cardData.status,
       title: inputValue,
       id: generateId,
     };
-
     const promiseAll = Promise.all([await setCardObj(obj), await setShowAddInput(false)]);
-
     return promiseAll;
+  };
+
+  /**
+   * @name onKeyDown
+   * @description onKeyDown textarea misbehaves not submit form when
+   * press enter so we track keydown and check if it's enter then submit form.
+   * @return none
+   */
+  const onKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      event.stopPropagation();
+      handleSubmit();
+    }
   };
 
   /**
@@ -84,6 +93,7 @@ const AddCard = (props: AddCardProps) => {
           value={inputValue}
           name="Card Text"
           ref={inputRef}
+          onKeyDown={(e) => onKeyDown(e)}
           rows={4}
           placeholder="Enter a title for this card"
         />
@@ -97,7 +107,6 @@ const AddCard = (props: AddCardProps) => {
             title="Add Card"
             color="primary"
           />
-          <BiDotsHorizontalRounded />
         </div>
       </form>
     </div>

@@ -1,9 +1,14 @@
 .footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   p {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 0.875rem;
+    font-weight: 500;
     color: #484848;
     text-align: center;
     margin: 2rem 0;
+    text-transform: uppercase;
   }
 }

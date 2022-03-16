@@ -1,22 +1,13 @@
 import Button from 'components/Button';
-import { BoardListProp, CardListProp } from 'components/Models';
-import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction } from 'react';
-import { AiOutlineCopy, AiOutlineDelete, AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
+import { ListProp } from 'components/Models';
+import React, { ChangeEvent, DragEvent, useState } from 'react';
+import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai';
 import { BiDotsHorizontalRounded } from 'react-icons/bi';
+import { BsTrash } from 'react-icons/bs';
 import '../../assets/scss/Lists.styles.scss';
 import AddCard from './AddCard';
 import CardItems from './CardItems';
 import EditForm from './EditForm';
-
-const { useState } = React;
-
-interface ListProp {
-  data: BoardListProp;
-  cardLists: CardListProp[];
-  setCardLists: Dispatch<SetStateAction<CardListProp[]>>;
-  setBoardLists: Dispatch<SetStateAction<BoardListProp[]>>;
-  boardLists: BoardListProp[];
-}
 
 const Lists = (props: ListProp) => {
   const { data, cardLists, setCardLists, boardLists, setBoardLists } = props;
@@ -206,7 +197,7 @@ const Lists = (props: ListProp) => {
               color="transparent"
               onClick={() => handleDelete(data.id, data.status)}
             >
-              <AiOutlineDelete />
+              <BsTrash />
             </Button>
           </div>
         )}
@@ -239,7 +230,6 @@ const Lists = (props: ListProp) => {
             >
               <AiOutlinePlus size="18" />
             </Button>
-            <AiOutlineCopy />
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { Dispatch, MouseEventHandler, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, MouseEventHandler, SetStateAction } from 'react';
 
 export interface ButtonProps {
   title?: string;
@@ -17,7 +17,7 @@ export interface AddButtonProps {
   iconPosition?: string;
   size?: number;
   color?: string;
-  handleAdd?: () => void;
+  handleAdd?: MouseEventHandler;
 }
 
 export interface CardListProp {
@@ -39,4 +39,21 @@ export interface AddCardProps {
   setShowAddInput: Dispatch<SetStateAction<boolean>>;
   cardData: BoardListProp;
   setCardLists: Dispatch<SetStateAction<CardListProp[]>>;
+}
+
+export interface ListProp {
+  data: BoardListProp;
+  cardLists: CardListProp[];
+  setCardLists: Dispatch<SetStateAction<CardListProp[]>>;
+  setBoardLists: Dispatch<SetStateAction<BoardListProp[]>>;
+  boardLists: BoardListProp[];
+}
+
+export interface EditFormProps {
+  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: FormEvent<HTMLFormElement>, id: string) => void;
+  inputValue: string;
+  id: string;
+  name: string;
+  placeholder: string;
 }

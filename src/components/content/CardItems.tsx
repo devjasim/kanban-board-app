@@ -2,12 +2,13 @@ import Button from 'components/Button';
 import { BoardListProp, CardListProp } from 'components/Models';
 import React, { ChangeEvent, Dispatch, DragEvent, SetStateAction } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { BsTrash } from 'react-icons/bs';
 import { VscLock, VscUnlock } from 'react-icons/vsc';
 import '../../assets/scss/CardItems.styles.scss';
 import EditForm from './EditForm';
 import InputError from './InputError';
 
-const { useCallback, useEffect, useRef, useState } = React;
+const { useEffect, useRef, useState } = React;
 
 interface CardProps {
   data: BoardListProp;
@@ -105,7 +106,18 @@ const CardItems = (props: CardProps) => {
     setInputValue(value);
   };
 
-  console.log('CARD', cardLists);
+  /**
+   * @name handleDeleteCard
+   * @description get id as param and filter card lists using the id and set new list
+   * @param id
+   * @return none;
+   */
+  const handleDeleteCard = (id: string) => {
+    if (id) {
+      const filtered = cardLists.filter((item) => item.id !== id);
+      setCardLists(filtered);
+    }
+  };
 
   return (
     <>
@@ -128,8 +140,10 @@ const CardItems = (props: CardProps) => {
             name="card_name"
           />
         )}
+
+        {/* Conditionally rendered depends on edit mood  */}
         {!edit && (
-          <div>
+          <div className="card__actions">
             <Button
               type="button"
               onClick={() => setCardLock(!cardLock)}
@@ -145,6 +159,14 @@ const CardItems = (props: CardProps) => {
               color="transparent"
             >
               <AiOutlineEdit size={15} />
+            </Button>
+            <Button
+              type="button"
+              onClick={() => handleDeleteCard(data.id)}
+              iconPosition="center"
+              color="transparent"
+            >
+              <BsTrash size={15} />
             </Button>
           </div>
         )}

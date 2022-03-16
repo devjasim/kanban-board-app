@@ -26,11 +26,9 @@ const Content = () => {
    */
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (boardValue === '' || error) {
       return setError(true);
     }
-
     const promiseAll = Promise.all([
       setBoardObj({
         title: boardValue,
@@ -40,7 +38,6 @@ const Content = () => {
       }),
       setBoardValue(''),
     ]);
-
     return promiseAll;
   };
 
